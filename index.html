@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ХАЛТУРА 🤣 Сайт для кентів</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Black', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: bounce 2s infinite;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .sticker-box {
+            background: #f0f0f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            min-height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sticker {
+            max-width: 100%;
+            max-height: 300px;
+            animation: popIn 0.5s ease-out;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .sticker:hover {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .joke-text {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        .btn-secondary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+
+        .emoji-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .falling-emoji {
+            position: absolute;
+            font-size: 2em;
+            animation: fall linear forwards;
+            user-select: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-180deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .counter {
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .telegram-link {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .telegram-link a {
+            display: inline-block;
+            background: #0088cc;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .telegram-link a:hover {
+            background: #0077b3;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .subtitle {
+                font-size: 1em;
+            }
+            .sticker-box {
+                min-height: 280px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-rain" id="emojiRain"></div>
+
+    <div class="container">
+        <h1>🤣 ХАЛТУРА 🤣</h1>
+        <p class="subtitle">Сайт для справжніх кентів 😎</p>
+
+        <div class="sticker-box">
+            <img class="sticker" id="sticker" src="" alt="Стікер" onclick="newJoke()">
+        </div>
+
+        <div class="joke-text" id="joke"></div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="newJoke()">🎲 Новий подкол!</button>
+            <button class="btn-secondary" onclick="celebration()">🎉 Святкуємо!</button>
+        </div>
+
+        <div class="counter">
+            Переглянули: <strong id="counter">0</strong> подколів 😄
+        </div>
+
+        <div class="telegram-link">
+            <p style="margin-bottom: 15px; color: #666;">Хочеш більше стікерів?</p>
+            <a href="https://t.me/addstickers/sc96ac3a61c3654c495edc6689d0d4c49_by_sozdat_stikery_bot" target="_blank">
+                📱 Стікери в Telegram
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const jokes = [
+            { text: "Халтура - це не лікувальна робота, це мистецтво! 🎨" },
+            { text: "Мінімум роботи, максимум грошей - золоте правило халтурника! 💰" },
+            { text: "Халтура - коли начальник думає, що ти працюєш, а ти насправді розслабляєшся 😎" },
+            { text: "Недільна Халтура в понеділок виглядає як шедевр 🏆" },
+            { text: "Халтура - це коли проект 'близько' перетворюється на 'готово'! ✨" },
+            { text: "Настоящего халтурщика не можна переконати в тому, що це можна робити краще 😄" },
+            { text: "Халтура + кава = продуктивність 📊" },
+            { text: "На халтурі немає опозиції, тільки понад-часу 🕐" },
+            { text: "Халтура вже не те, що було... Він став ЗУБОЗМІНИ 🦷" },
+            { text: "Кожне посилання хорошо, коли воно халтурне 🎯" },
+            { text: "Халтура - це коли копіюєш код з StackOverflow і видозмінюєш змінні! 👨‍💻" },
+            { text: "Быстро? Дешево? Качественно? Выбери два. Мы выбираем ХАЛТУРУ 🔥" },
+            { text: "Халтура - найліпша пісня, яка колись була створена з помилок 🎵" },
+            { text: "Коли вже урок на халтурі? 🎓" },
+            { text: "Халтура + прокрастинація = КОРОЛЬ ♔" },
+            { text: "Знаєш що таке успіх? Це коли твоя халтура проходить код-ревью! 👀" },
+            { text: "Халтура - це робота, яка робить тебе щасливим 🌟" },
+            { text: "Почалося як напрацювання, закінчилося як шедевр 🎭" },
+            { text: "Халтура - це коли клієнт платить, а ти роблиш 😏" },
+            { text: "Найкраще в халтурі - що її невидно на екрані 🖥️" }
+        ];
+
+        const stickerFiles = [
+            "001_✅.webp", "002_🐱.webp", "003_🫥.webp", "004_🫥.webp", "005_🫥.webp",
+            "006_🫥.webp", "007_🫥.webp", "008_🫥.webp", "009_✋.webp", "010_🫥.webp",
+            "011_🫥.webp", "012_🫥.webp", "013_🫥.webp", "014_🫥.webp", "015_🫥.webp",
+            "016_🫥.webp", "017_🫥.webp", "018_🫥.webp", "019_🫥.webp", "020_🫥.webp"
+        ];
+
+        let clickCount = 0;
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function newJoke() {
+            clickCount++;
+            document.getElementById('counter').textContent = clickCount;
+
+            const joke = getRandomItem(jokes);
+            document.getElementById('joke').textContent = joke.text;
+            document.getElementById('joke').style.animation = 'none';
+            setTimeout(() => {
+                document.getElementById('joke').style.animation = 'slideIn 0.5s ease-out';
+            }, 10);
+
+            // Завантажуємо стікер як base64 з архіву (якщо будуть на хостингу)
+            // На виході використаємо посилання на файли
+            const stickerFile = getRandomItem(stickerFiles);
+            document.getElementById('sticker').src = stickerFile;
+        }
+
+        function celebration() {
+            const emojis = ['🎉', '🤣', '😂', '🔥', '💯', '✨', '🎊', '🚀', '⭐', '💫'];
+            const emojiRain = document.getElementById('emojiRain');
+
+            for (let i = 0; i < 30; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'falling-emoji';
+                emoji.textContent = getRandomItem(emojis);
+                emoji.style.left = Math.random() * 100 + '%';
+                emoji.style.animationDuration = (2 + Math.random() * 2) + 's';
+                emoji.style.animationDelay = Math.random() * 0.5 + 's';
+                emojiRain.appendChild(emoji);
+
+                setTimeout(() => emoji.remove(), 4000);
+            }
+
+            // Звук (якщо браузер дозволить)
+            playSound();
+        }
+
+        function playSound() {
+            // Простий біп за допомогою Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (e) {
+                console.log('Звук недоступний');
+            }
+        }
+
+        // Завантажити першу анекдоту при загрузці сторінки
+        window.addEventListener('load', function() {
+            newJoke();
+        });
+    </script>
+</body>
+</html>
